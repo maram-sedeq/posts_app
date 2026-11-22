@@ -13,15 +13,15 @@ class LoadingPostsState extends PostsState{}
 
 class LoadedPostsState extends PostsState{
   final List<Post> posts;
-  new({required this.posts});
+  const new({required this.posts});
 
   @override
-  List<Object> get props =>[];
+   List<Object> get props => [posts];
 }
 
 class ErrorPostsState extends PostsState{
   final String message;
-  new({required this.message});
+  const new({required this.message});
   
   @override
     List<Object> get props =>[message];

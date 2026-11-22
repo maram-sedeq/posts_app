@@ -3,9 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:posts_app/core/app_theme.dart';
 import 'package:posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
 import 'package:posts_app/features/posts/presentation/bloc/posts/posts_bloc.dart';
+import 'package:posts_app/features/posts/presentation/pages/posts_page.dart';
+
 import 'injection_container.dart' as di;
 
-void main() async{
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await di.init();
   runApp(const MyApp());
@@ -19,22 +21,15 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(
-          create: (_) => di.sl<PostsBloc>(),
-        ),
-        BlocProvider(
-          create: (_) => di.sl<AddDeleteUpdatePostBloc>(),
-        ),
+          create: (_) => di.sl<PostsBloc>()..add(GetAllPostsEvent())),
+        BlocProvider(create: (_) => di.sl<AddDeleteUpdatePostBloc>()),
       ],
       child: MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: appTheme,
-      title: 'Psts App',
-      home: Scaffold(
-        appBar: AppBar(title: Text("Posts")),
-        body: Center(child: Text("Hello World")),
+        debugShowCheckedModeBanner: false,
+        theme: appTheme,
+        title: 'Psts App',
+        home: PostsPage(),
       ),
-    )
     );
   }
 }
-  
