@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:posts_app/features/posts/domain/entities/post.dart';
+import 'package:posts_app/features/posts/presentation/pages/post_add_update_page.dart';
 
 class PostListWidget extends StatelessWidget {
   const new({super.key, required this.posts});
@@ -15,9 +16,13 @@ class PostListWidget extends StatelessWidget {
             posts[index].title,
             style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
           ),
-          subtitle: Text(posts[index].body, style: TextStyle(fontSize: 16)),
+          subtitle: Text(posts[index].body, style: TextStyle(fontSize: 16),
+          maxLines: 2,),
           contentPadding: EdgeInsets.symmetric(horizontal: 10),
-          onTap: () {},
+          onTap: () {
+             Navigator.push(context, MaterialPageRoute(builder: (_)=> PostAddUpdatePage( isUpdatePost: true, post: posts[index],)));
+    
+          },
         );
       },
       separatorBuilder: (context, index) {

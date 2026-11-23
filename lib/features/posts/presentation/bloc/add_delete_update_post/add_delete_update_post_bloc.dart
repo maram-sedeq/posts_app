@@ -19,7 +19,7 @@ class AddDeleteUpdatePostBloc
   final UpdatePostUsecase updatePost;
 
   AddDeleteUpdatePostBloc({
-    required this.addPost,
+    required this.addPost, 
     required this.deletePost,
     required this.updatePost,
   }) : super(AddDeleteUpdatePostInitial()) {

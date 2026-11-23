@@ -27,7 +27,7 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         theme: appTheme,
-        title: 'Psts App',
+        title: 'Posts App',
         home: PostsPage(),
       ),
     );
