@@ -1,31 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import '../../../domain/entities/post.dart';
-import '../../bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
+import '../../providers/posts_notifier.dart';
 import '../text_from_field_widget.dart';
 import 'form_submit_btn.dart';
 
-class FormWidget extends StatefulWidget {
-  const new({super.key, required this.isUpdatePost, this.post});
+class FormWidget extends ConsumerStatefulWidget {
+  const FormWidget({super.key, required this.isUpdatePost, this.post});
+
   final bool isUpdatePost;
   final Post? post;
+
   @override
-  State<FormWidget> createState() => _FormWidgetState();
+  ConsumerState<FormWidget> createState() => _FormWidgetState();
 }
 
-class _FormWidgetState extends State<FormWidget> {
+class _FormWidgetState extends ConsumerState<FormWidget> {
   final _formKey = GlobalKey<FormState>();
-  TextEditingController _textController = TextEditingController();
-  TextEditingController _bodyController = TextEditingController();
+  final _textController = TextEditingController();
+  final _bodyController = TextEditingController();
 
   @override
   void initState() {
+    super.initState();
     if (widget.isUpdatePost) {
       _textController.text = widget.post!.title;
       _bodyController.text = widget.post!.body;
     }
-    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    _bodyController.dispose();
+    super.dispose();
   }
 
   @override
@@ -46,30 +55,26 @@ class _FormWidgetState extends State<FormWidget> {
             multiLines: false,
             controller: _bodyController,
           ),
-          
-          FormSubmitBtn(isUpdatePost:widget.isUpdatePost, onPressed: validateFromThenUpdateOrAddPost),
-         
-          
+          FormSubmitBtn(isUpdatePost: widget.isUpdatePost, onPressed: _submit),
         ],
       ),
     );
   }
-   void validateFromThenUpdateOrAddPost() {
-    final isValid = _formKey.currentState!.validate();
-    if (isValid) {
-      final post = Post(
-        id: widget.isUpdatePost ? widget.post!.id : null,
-        title: _textController.text,
-        body: _bodyController.text,
-      );
 
-      if (widget.isUpdatePost) {
-        BlocProvider.of<AddDeleteUpdatePostBloc>(context)
-            .add(UpdatePostEvent(post: post));
-      } else {
-        BlocProvider.of<AddDeleteUpdatePostBloc>(context)
-            .add(AddPostEvent(post: post));
-      }
+  void _submit() {
+    if (!_formKey.currentState!.validate()) return;
+
+    final post = Post(
+      id: widget.isUpdatePost ? widget.post!.id : null,
+      title: _textController.text,
+      body: _bodyController.text,
+    );
+
+    final actions = ref.read(postActionsProvider.notifier);
+    if (widget.isUpdatePost) {
+      actions.update(post);
+    } else {
+      actions.add(post);
     }
   }
 }

@@ -1,68 +1,55 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:posts_app/core/app_theme.dart';
 
 import '../../../../core/widget/loading_widget.dart';
-import '../bloc/posts/posts_bloc.dart';
+import '../../domain/entities/post.dart';
+import '../providers/posts_notifier.dart';
 import '../widgets/posts_page/message_display_widget.dart';
 import '../widgets/posts_page/post_list_widget.dart';
 import 'post_add_update_page.dart';
 
-class PostsPage extends StatelessWidget {
-  const PostsPage({Key? key}) : super(key: key);
+class PostsPage extends ConsumerWidget {
+  const PostsPage({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
-      appBar: _buildAppbar(),
-      body: _buildBody(),
-      floatingActionButton: _buildfloatingbtn(context),
-    );
-  }
-
-  PreferredSizeWidget _buildAppbar() => AppBar(
-    title: Text("Posts", style: TextStyle(color: secondaryColor)),
-    backgroundColor: primaryColor,
-  );
-
-  Widget _buildBody() {
-    return Padding(
-      padding: const EdgeInsets.all(10),
-      child: BlocBuilder<PostsBloc, PostsState>(
-        builder: (context, state) {
-          if (state is LoadingPostsState) {
-            return LoadingWidget();
-          } else if (state is LoadedPostsState) {
-            return RefreshIndicator(
-              onRefresh: () => _onRefresh(context),
-              child: PostListWidget(posts: state.posts),
-            );
-          } else if (state is ErrorPostsState) {
-            return MessageDisplayWidget(message: state.message);
-          }
-          return LoadingWidget();
+      appBar: AppBar(
+        title: const Text("Posts", style: TextStyle(color: Colors.white)),
+        backgroundColor: primaryColor,
+      ),
+      body: _buildBody(ref),
+      floatingActionButton: FloatingActionButton(
+        backgroundColor: primaryColor,
+        foregroundColor: secondaryColor,
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const PostAddUpdatePage(isUpdatePost: false),
+            ),
+          );
         },
+        child: const Icon(Icons.add),
       ),
     );
   }
 
-  Future<void> _onRefresh(BuildContext context) async {
-    BlocProvider.of<PostsBloc>(context).add(RefreshPostsEvent());
-  }
+  Widget _buildBody(WidgetRef ref) {
+    final postsState = ref.watch(postsProvider);
 
-  Widget _buildfloatingbtn(BuildContext context) {
-    return FloatingActionButton(
-      backgroundColor:primaryColor,
-      foregroundColor: secondaryColor,
-      onPressed: () {
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (_) => PostAddUpdatePage(isUpdatePost: false),
-          ),
-        );
-      },
-      child: Icon(Icons.add),
+    return Padding(
+      padding: const EdgeInsets.all(10),
+      child: postsState.when(
+        data: (List<Post> posts) => RefreshIndicator(
+          onRefresh: () => ref.read(postsProvider.notifier).refresh(),
+          child: PostListWidget(posts: posts),
+        ),
+        loading: () => const LoadingWidget(),
+        error: (error, _) =>
+            MessageDisplayWidget(message: postFailureMessage(error)),
+      ),
     );
   }
 }
