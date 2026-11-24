@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posts_app/core/app_theme.dart';
 
 import '../../domain/entities/post.dart';
 import '../widgets/post_detail_page/post_detail_widget.dart';
@@ -16,8 +17,8 @@ final Post post;
   
   AppBar _buildAppbar(){
    return AppBar(
-    title: Text("Post Detail", style: TextStyle(color: Colors.white)),
-    backgroundColor: Colors.pink[200]
+    title: Text("Post Details", style: TextStyle(color: secondaryColor)),
+    backgroundColor: primaryColor
     ,);
   }
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posts_app/core/app_theme.dart';
 
 import '../../../../core/util/snackbar_message.dart';
 import '../../../../core/widget/loading_widget.dart';
@@ -25,7 +26,7 @@ class PostAddUpdatePage extends StatelessWidget {
       isUpdatePost ? "Edit Post" : "Add Post",
       style: TextStyle(color: Colors.white),
     ),
-    backgroundColor: Colors.pink[200],
+    backgroundColor:primaryColor,
   );
 
   Widget _buildBody() {

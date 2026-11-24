@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:posts_app/core/app_theme.dart';
 
 import '../../../domain/entities/post.dart';
 import '../../pages/post_add_update_page.dart';
@@ -20,7 +21,7 @@ class UpdatePostBtnWidget extends StatelessWidget {
       icon: Icon(Icons.edit),
       label: Text("Edit", style: TextStyle(color: Colors.white)),
       style: ButtonStyle(
-        backgroundColor: WidgetStateProperty.all(Colors.pink[400]),
+        backgroundColor: WidgetStateProperty.all(buttonsColor),
         iconColor: WidgetStateProperty.all(Colors.white),
       ),
     );

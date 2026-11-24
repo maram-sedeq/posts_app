@@ -1,17 +1,66 @@
-# posts_app
+# Posts App
 
-A new Flutter project.
+تطبيق Flutter بسيط لعرض المنشورات وإضافتها وتعديلها وحذفها. يستخدم التطبيق واجهة JSONPlaceholder لجلب بيانات المنشورات، ويخزن نسخة محلية لعرضها عند عدم توفر الاتصال.
 
-## Getting Started
+## الميزات
 
-This project is a starting point for a Flutter application.
+- عرض قائمة المنشورات مع المعرّف والعنوان ومقتطف من المحتوى.
+- فتح تفاصيل المنشور.
+- إضافة منشور بعنوان ومحتوى.
+- تعديل منشور موجود وحذفه.
+- حفظ قائمة المنشورات محليًا باستخدام `shared_preferences` واستخدامها عند عدم الاتصال.
+- فصل الواجهة ومنطق التطبيق ومصادر البيانات ضمن بنية طبقية.
 
-A few resources to get you started if this is your first Flutter project:
+## المتطلبات
 
-- [Learn Flutter](https://docs.flutter.dev/get-started/learn-flutter)
-- [Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Flutter learning resources](https://docs.flutter.dev/reference/learning-resources)
+- Flutter SDK متوافق مع إصدار Dart المحدد في `pubspec.yaml` (`^3.14.0-315.1.beta`).
+- محاكي أو جهاز متصل، أو منصة Flutter مدعومة.
+- اتصال بالإنترنت لجلب المنشورات وتنفيذ عمليات الإضافة والتعديل والحذف.
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## التشغيل
+
+من مجلد المشروع، نفّذ:
+
+```bash
+flutter pub get
+flutter run
+```
+
+لتشغيل فحوصات المشروع:
+
+```bash
+flutter test
+```
+
+## مصدر البيانات
+
+يستخدم التطبيق نقطة النهاية التالية:
+
+```text
+https://jsonplaceholder.typicode.com/posts
+```
+
+يُقرأ `id` من المنشورات المحمّلة ويُستخدم في التعديل والحذف. المنشور الجديد لا يحمل `id` قبل إرساله؛ لذلك لا يُرسل التطبيق قيمة `id` ضمن طلب الإضافة. يجب أن يحتوي كل منشور محمّل من الخادم على معرّف صحيح.
+
+## بنية المشروع
+
+```text
+lib/
+├── core/                 # أخطاء التطبيق، الشبكة، الرسائل والعناصر المشتركة
+├── features/posts/
+│   ├── data/              # النماذج، مصادر البيانات والمستودع
+│   ├── domain/            # الكيان، المستودع وحالات الاستخدام
+│   └── presentation/      # صفحات التطبيق، عناصر الواجهة وBLoC
+├── injection_container.dart
+└── main.dart
+```
+
+## الحزم الرئيسية
+
+- `flutter_bloc` و`bloc` لإدارة حالة الواجهة.
+- `http` لطلبات واجهة JSONPlaceholder.
+- `dartz` لتمثيل نتائج العمليات.
+- `equatable` لمقارنة الكيانات والحالات.
+- `get_it` لحقن الاعتماديات.
+- `shared_preferences` لتخزين المنشورات محليًا.
+- `internet_connection_checker` لفحص الاتصال.

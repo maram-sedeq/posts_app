@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:posts_app/core/app_theme.dart';
 
 import '../../../../core/widget/loading_widget.dart';
 import '../bloc/posts/posts_bloc.dart';
@@ -20,8 +21,8 @@ class PostsPage extends StatelessWidget {
   }
 
   PreferredSizeWidget _buildAppbar() => AppBar(
-    title: Text("Posts", style: TextStyle(color: Colors.white)),
-    backgroundColor: Colors.pink[200],
+    title: Text("Posts", style: TextStyle(color: secondaryColor)),
+    backgroundColor: primaryColor,
   );
 
   Widget _buildBody() {
@@ -51,8 +52,8 @@ class PostsPage extends StatelessWidget {
 
   Widget _buildfloatingbtn(BuildContext context) {
     return FloatingActionButton(
-      backgroundColor:Colors.pink[200],
-      foregroundColor: Colors.white,
+      backgroundColor:primaryColor,
+      foregroundColor: secondaryColor,
       onPressed: () {
         Navigator.push(
           context,
