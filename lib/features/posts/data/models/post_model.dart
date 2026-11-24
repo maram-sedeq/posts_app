@@ -3,10 +3,15 @@ import '../../domain/entities/post.dart';
 
 class PostModel extends Post{
   
-  new({ int?id, required super.title, required super.body});
+  // Forward the ID to Post; otherwise every model inherits a null ID.
+  new({super.id, required super.title, required super.body});
 
   factory PostModel.fromJson(Map<String,dynamic> json){
-    return PostModel(id: json['id'], title: json['title'], body: json['body']);
+    final id = json['id'];
+    if (id is! int) {
+      throw const FormatException('A loaded post must have an integer id.');
+    }
+    return PostModel(id: id, title: json['title'], body: json['body']);
   }
   
 

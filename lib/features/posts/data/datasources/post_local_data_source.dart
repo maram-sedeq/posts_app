@@ -28,14 +28,20 @@ class PostLocalDataSourceImpl implements PostLocalDataSource{
    }
   
   @override
-  Future<List<PostModel>> getCachPosts() {
+  Future<List<PostModel>> getCachPosts() async {
    final jsonString = sharedPreferences.getString(CACHED_POSTS);
    if(jsonString != null){
-      List decodeJsonData = json.decode(jsonString);
-      List<PostModel> jsonToPostsModels = decodeJsonData
-          .map<PostModel>((jsonPostModel)=> PostModel.fromJson(jsonPostModel))
-          .toList();
-        return Future.value(jsonToPostsModels);
+      try {
+        final List decodeJsonData = json.decode(jsonString);
+        final List<PostModel> jsonToPostsModels = decodeJsonData
+            .map<PostModel>((jsonPostModel)=> PostModel.fromJson(jsonPostModel))
+            .toList();
+        return jsonToPostsModels;
+      } on FormatException {
+        // Older cached entries may have null IDs because they were saved
+        // before PostModel forwarded the ID to its parent entity.
+        throw EmptyCachException();
+      }
        }
        else{
         throw EmptyCachException();

@@ -27,10 +27,13 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
     );
     if (response.statusCode == 200) {
       final List decodedJson = json.decode(response.body) as List;
-      final List<PostModel> PostModels = decodedJson
-          .map<PostModel>((jsonPostModel) => PostModel.fromJson(jsonPostModel))
-          .toList();
-      return PostModels;
+      try {
+        return decodedJson
+            .map<PostModel>((jsonPostModel) => PostModel.fromJson(jsonPostModel))
+            .toList();
+      } on FormatException {
+        throw ServerException();
+      }
     } else {
       throw ServerException();
     }
@@ -65,9 +68,12 @@ class PostRemoteDataSourceImpl implements PostRemoteDataSource {
 
   @override
   Future<Unit> updatePost(PostModel postModel) async {
-    final postId = postModel.id.toString();
+    final postId = postModel.id;
+    if (postId == null) {
+      throw ServerException();
+    }
     final body = {"title": postModel.title, "body": postModel.body};
-    final response = await client.delete(
+    final response = await client.put(
       Uri.parse(BASE_URL + "/posts/$postId"),
       body: body,
     );

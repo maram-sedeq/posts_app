@@ -20,13 +20,14 @@ class PostDetailWidget extends StatelessWidget {
           Divider(height: 50),
           Text(post.body, style: TextStyle(fontSize: 16)),
           Divider(height: 60),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              UpdatePostBtnWidget(post: post),
-              DeletePostBtnWidget(postId: post.id!),
-            ],
-          ),
+          if (post.id != null)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                UpdatePostBtnWidget(post: post),
+                DeletePostBtnWidget(postId: post.id!),
+              ],
+            ),
         ],
       ),
     );
