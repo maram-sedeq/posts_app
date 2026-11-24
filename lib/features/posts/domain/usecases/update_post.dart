@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
-import 'package:posts_app/core/error/failures.dart';
-import 'package:posts_app/features/posts/domain/entities/post.dart';
-import 'package:posts_app/features/posts/domain/repositories/posts_repository.dart';
+
+import '../../../../core/error/failures.dart';
+import '../entities/post.dart';
+import '../repositories/posts_repository.dart';
 
 class UpdatePostUsecase {
   final PostsRepository repository;

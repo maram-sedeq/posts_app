@@ -2,9 +2,9 @@ import 'dart:convert';
 
 import 'package:dartz/dartz.dart';
 import 'package:http/http.dart' as http;
-import 'package:posts_app/core/error/exceptions.dart';
-import 'package:posts_app/features/posts/data/models/post_model.dart';
-import 'package:posts_app/features/posts/domain/entities/post.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../models/post_model.dart';
 
 const BASE_URL = "https://jsonplaceholder.typicode.com";
 

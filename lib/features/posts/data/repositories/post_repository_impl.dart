@@ -1,12 +1,13 @@
 import 'package:dartz/dartz.dart';
-import 'package:posts_app/core/error/exceptions.dart';
-import 'package:posts_app/core/error/failures.dart';
-import 'package:posts_app/core/network/network_info.dart';
-import 'package:posts_app/features/posts/data/datasources/post_local_data_source.dart';
-import 'package:posts_app/features/posts/data/datasources/post_remote_data_source.dart';
-import 'package:posts_app/features/posts/data/models/post_model.dart';
-import 'package:posts_app/features/posts/domain/entities/post.dart';
-import 'package:posts_app/features/posts/domain/repositories/posts_repository.dart';
+
+import '../../../../core/error/exceptions.dart';
+import '../../../../core/error/failures.dart';
+import '../../../../core/network/network_info.dart';
+import '../../domain/entities/post.dart';
+import '../../domain/repositories/posts_repository.dart';
+import '../datasources/post_local_data_source.dart';
+import '../datasources/post_remote_data_source.dart';
+import '../models/post_model.dart';
 
 
 typedef Future<Unit> DeleteOrUpdateOrAddPost();

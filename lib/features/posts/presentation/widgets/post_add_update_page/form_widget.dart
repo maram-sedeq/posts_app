@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:posts_app/features/posts/domain/entities/post.dart';
-import 'package:posts_app/features/posts/presentation/bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
-import 'package:posts_app/features/posts/presentation/widgets/post_add_update_page/form_submit_btn.dart';
-import 'package:posts_app/features/posts/presentation/widgets/text_from_field_widget.dart';
+
+import '../../../domain/entities/post.dart';
+import '../../bloc/add_delete_update_post/add_delete_update_post_bloc.dart';
+import '../text_from_field_widget.dart';
+import 'form_submit_btn.dart';
 
 class FormWidget extends StatefulWidget {
   const new({super.key, required this.isUpdatePost, this.post});
