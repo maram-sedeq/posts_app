@@ -1,11 +1,10 @@
-import 'package:http/http.dart' as http;
 import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../core/network/network_info.dart';
+import '../../data/datasources/post_api_providers.dart';
 import '../../data/datasources/post_local_data_source.dart';
-import '../../data/datasources/post_remote_data_source.dart';
 import '../../data/repositories/post_repository_impl.dart';
 import '../../domain/repositories/posts_repository.dart';
 import '../../domain/usecases/add_post.dart';
@@ -23,13 +22,6 @@ SharedPreferences sharedPreferences(Ref ref) {
 }
 
 @riverpod
-http.Client httpClient(Ref ref) {
-  final client = http.Client();
-  ref.onDispose(client.close);
-  return client;
-}
-
-@riverpod
 InternetConnectionChecker internetConnectionChecker(Ref ref) {
   return InternetConnectionChecker.createInstance();
 }
@@ -39,11 +31,6 @@ NetworkInfo networkInfo(Ref ref) {
   return NetworkInfoImpl(
     connectionChecker: ref.watch(internetConnectionCheckerProvider),
   );
-}
-
-@riverpod
-PostRemoteDataSource postRemoteDataSource(Ref ref) {
-  return PostRemoteDataSourceImpl(client: ref.watch(httpClientProvider));
 }
 
 @riverpod

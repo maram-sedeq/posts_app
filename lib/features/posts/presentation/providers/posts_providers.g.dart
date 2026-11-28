@@ -56,47 +56,6 @@ final class SharedPreferencesProvider
 
 String _$sharedPreferencesHash() => r'2d6e035b6bf9da3fe24dafecb57758f049039114';
 
-@ProviderFor(httpClient)
-final httpClientProvider = HttpClientProvider._();
-
-final class HttpClientProvider
-    extends $FunctionalProvider<http.Client, http.Client, http.Client>
-    with $Provider<http.Client> {
-  HttpClientProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'httpClientProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$httpClientHash();
-
-  @$internal
-  @override
-  $ProviderElement<http.Client> $createElement($ProviderPointer pointer) =>
-      $ProviderElement(pointer);
-
-  @override
-  http.Client create(Ref ref) {
-    return httpClient(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(http.Client value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<http.Client>(value),
-    );
-  }
-}
-
-String _$httpClientHash() => r'3e1d65fa831165b685a1881b712e31312635f7c7';
-
 @ProviderFor(internetConnectionChecker)
 final internetConnectionCheckerProvider = InternetConnectionCheckerProvider._();
 
@@ -185,54 +144,6 @@ final class NetworkInfoProvider
 }
 
 String _$networkInfoHash() => r'20f178205cce669dac88b3a489a9a4fb83055deb';
-
-@ProviderFor(postRemoteDataSource)
-final postRemoteDataSourceProvider = PostRemoteDataSourceProvider._();
-
-final class PostRemoteDataSourceProvider
-    extends
-        $FunctionalProvider<
-          PostRemoteDataSource,
-          PostRemoteDataSource,
-          PostRemoteDataSource
-        >
-    with $Provider<PostRemoteDataSource> {
-  PostRemoteDataSourceProvider._()
-    : super(
-        from: null,
-        argument: null,
-        retry: null,
-        name: r'postRemoteDataSourceProvider',
-        isAutoDispose: true,
-        dependencies: null,
-        $allTransitiveDependencies: null,
-      );
-
-  @override
-  String debugGetCreateSourceHash() => _$postRemoteDataSourceHash();
-
-  @$internal
-  @override
-  $ProviderElement<PostRemoteDataSource> $createElement(
-    $ProviderPointer pointer,
-  ) => $ProviderElement(pointer);
-
-  @override
-  PostRemoteDataSource create(Ref ref) {
-    return postRemoteDataSource(ref);
-  }
-
-  /// {@macro riverpod.override_with_value}
-  Override overrideWithValue(PostRemoteDataSource value) {
-    return $ProviderOverride(
-      origin: this,
-      providerOverride: $SyncValueProvider<PostRemoteDataSource>(value),
-    );
-  }
-}
-
-String _$postRemoteDataSourceHash() =>
-    r'37c64edacbd3f75a38b75442834c3c9cf2bf9938';
 
 @ProviderFor(postLocalDataSource)
 final postLocalDataSourceProvider = PostLocalDataSourceProvider._();

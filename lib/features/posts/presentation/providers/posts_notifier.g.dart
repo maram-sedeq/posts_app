@@ -32,7 +32,7 @@ final class PostsProvider extends $AsyncNotifierProvider<Posts, List<Post>> {
   Posts create() => Posts();
 }
 
-String _$postsHash() => r'3a245f55fd223e162b115e1f7a43375b07e43fc5';
+String _$postsHash() => r'e6de5e219bc351bba7c375f461cfebfc89deb4b9';
 
 abstract class _$Posts extends $AsyncNotifier<List<Post>> {
   FutureOr<List<Post>> build();
