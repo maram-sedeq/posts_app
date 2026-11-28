@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:posts_app/core/app_theme.dart';
 
+import '../../../../../core/app_theme.dart';
 import 'delete_dialog_widget.dart';
 
 class DeletePostBtnWidget extends StatelessWidget {

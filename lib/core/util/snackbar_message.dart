@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:posts_app/core/app_theme.dart';
+
+import '../app_theme.dart';
 
 class SnackbarMessage {
 

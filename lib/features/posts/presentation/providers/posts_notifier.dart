@@ -20,10 +20,10 @@ class Posts extends _$Posts {
     return result.fold((failure) => throw failure, (posts) => posts);
   }
 
-  Future<void> refresh() async {
+ Future<void> refresh() async {
     state = const AsyncLoading();
     state = await AsyncValue.guard(() async {
-      final result = await ref.read(getAllPostsUsecaseProvider)();
+      final result = await ref.watch(getAllPostsUsecaseProvider)();
       return result.fold((failure) => throw failure, (posts) => posts);
     });
   }

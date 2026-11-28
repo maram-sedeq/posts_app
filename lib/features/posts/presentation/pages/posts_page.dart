@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:posts_app/core/app_theme.dart';
-
+import '../../../../core/app_theme.dart';
 import '../../../../core/widget/loading_widget.dart';
-import '../../domain/entities/post.dart';
 import '../providers/posts_notifier.dart';
 import '../widgets/posts_page/message_display_widget.dart';
 import '../widgets/posts_page/post_list_widget.dart';
@@ -42,11 +40,11 @@ class PostsPage extends ConsumerWidget {
     return Padding(
       padding: const EdgeInsets.all(10),
       child: postsState.when(
-        data: (List<Post> posts) => RefreshIndicator(
+         loading: () => const LoadingWidget(),
+         data: ( posts) => RefreshIndicator(
           onRefresh: () => ref.read(postsProvider.notifier).refresh(),
           child: PostListWidget(posts: posts),
         ),
-        loading: () => const LoadingWidget(),
         error: (error, _) =>
             MessageDisplayWidget(message: postFailureMessage(error)),
       ),

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:posts_app/core/app_theme.dart';
 
+import '../../../../core/app_theme.dart';
 import '../../../../core/util/snackbar_message.dart';
 import '../../../../core/widget/loading_widget.dart';
 import '../../domain/entities/post.dart';
@@ -30,7 +30,7 @@ class PostAddUpdatePage extends ConsumerWidget {
             (route) => false,
           );
         },
-        error: (error, _) {
+        error: (error , _) {
           SnackbarMessage().showErrorSnackBar(
             message: postFailureMessage(error),
             context: context,
